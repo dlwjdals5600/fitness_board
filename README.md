@@ -16,8 +16,5 @@
 
 
 ### 사용 기술 및 tools
-> - Front-End : <img src="https://img.shields.io/badge/ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white"/>&nbsp;
-> - <img src="https://img.shields.io/badge/jQuery-CA4245?style=for-the-badge&logo=jQuery&logoColor=white"/>
-> - <img src="https://img.shields.io/badge/Ajax-338000?style=for-the-badge&logo=AJAX&logoColor=white"/>
-> - <img src="https://img.shields.io/badge/HTML5-61DAFB?style=for-the-badge&logo=html5&logoColor=white"/>
-> - <img src="https://img.shields.io/badge/CSS-CC6699?style=for-the-badge&logo=css3&logoColor=white"/>
+> - Front-End : <img src="https://img.shields.io/badge/ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white"/>&nbsp;<img src="https://img.shields.io/badge/jQuery-CA4245?style=for-the-badge&logo=jQuery&logoColor=white"/>&nbsp;<img src="https://img.shields.io/badge/Ajax-338000?style=for-the-badge&logo=AJAX&logoColor=white"/>&nbsp;<img src="https://img.shields.io/badge/HTML5-61DAFB?style=for-the-badge&logo=html5&logoColor=white"/>&nbsp;<img src="https://img.shields.io/badge/CSS-CC6699?style=for-the-badge&logo=css3&logoColor=white"/>
+> - Back-End : <img src="https://img.shields.io/badge/Java-787878?style=for-the-badge&logo=java&logoColor=white"/>&nbsp;
