@@ -23,12 +23,12 @@
 - JDK : JDK-21
 - Packaging : JAR
 - Spring Boot : 3.2.5
-- Dependency : Spring Web
-               Spring Boot DevTools
-               Thymeleaf
-               Spring Session
-               MySQL Driver
-               JDBC API
+- Dependency : Spring Web <br>
+               Spring Boot DevTools <br>
+               Thymeleaf <br>
+               Spring Session <br>
+               MySQL Driver <br>
+               JDBC API <br>
                MyBatis Framework
 
 <br>
