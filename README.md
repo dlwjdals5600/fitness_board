@@ -24,8 +24,8 @@
 
 ### IDE (통합 개발 환경)
 
-#### STS4(Web 개발 툴)                      #### DBeaver(데이터베이스 툴)
-- language : java                           - SQL : MySQL
+#### STS4(Web 개발 툴)                      
+- language : java
 - build type : gradle-groovy
 - JDK : JDK-21
 - Packaging : JAR
