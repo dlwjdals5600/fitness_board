@@ -16,4 +16,4 @@
 
 
 ### 사용 기술 및 tools
-> - Front-End : <img src="https://img.shields.io/badge/ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white"/>&nbsp;<img src="https://img.shields.io/badge/CSS-F7DF1E?style=for-the-badge&logo=CSS&logoColor=white"/>
+> - Front-End : <img src="https://img.shields.io/badge/ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white"/>&nbsp;<img src="https://img.shields.io/badge/CSS-CC6699?style=for-the-badge&logo=css&logoColor=white"/>
