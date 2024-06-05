@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/menu.css}"/>
+    <title>메인 화면</title>
+</head>
+<body>
+<div id="menu">
+    <ul>
+        <li id="logo">Fitness</li>
+        <li><a th:href="@{/}">Home</a></li>
+        <li><a th:href="@{/board/list}">Board</a></li>
+        <li><a th:href="@{${loginOutLink}}" th:text="${loginOut}"></a></li>
+        <li><a th:href="@{/register/add}">Sign in</a></li>
+        <li><a href=""><i class="fa fa-search"></i></a></li>
+    </ul>
+</div>
+<div style="text-align:center">
+    <h1>홈 화면 입니다.</h1>
+</div>
+</body>
+</html>
