@@ -66,6 +66,7 @@
         
         #comment_ul {
         display: inline;
+        background-color: white;
         }
         
         #comment_li {
@@ -113,19 +114,19 @@
 		}
 		
 		.btn {
-	    font-size:10pt;
-	    color : black;
-	    background-color: #eff0f2;
-	    text-decoration: none;
-	    padding : 9px 10px 9px 10px;
-	    border-radius: 5px;
-	    float : right;
+		    font-size:10pt;
+		    color : black;
+		    background-color: #eff0f2;
+		    text-decoration: none;
+		    padding : 9px 10px 9px 10px;
+		    border-radius: 5px;
+		    float : right;
 		}
 		
 		.comment-bottom {
-	    font-size:9pt;
-	    color : rgb(97,97,97);
-	    padding: 8px 0 8px 0;
+		    font-size:9pt;
+		    color : rgb(97,97,97);
+		    padding: 8px 0 8px 0;
 		}
 		
 		.comment-bottom > a {
@@ -133,6 +134,47 @@
 		    text-decoration: none;
 		    margin : 0 6px 0 0;
 		}
+		
+		#replyForm {
+		    display : none;
+		    background-color: white;
+		    border : 1px solid #e5e5e5;
+		    border-radius: 5px;
+		    margin : 10px;
+	}
+	
+		#replyFormBottom {
+		    padding : 3px 10px 10px 10px;
+		    min-height : 35px;
+		}
+		
+		#cancelRepBtn { 
+		    background-color: #eff0f2;
+		    margin-right : 10px;
+	}
+		#wrtRepBtn { 
+		    color : #009f47;
+		    background-color: #e0f8eb;
+	}
+	
+		.reply-comment{
+			color : red;
+			margin-left : 60px;
+			margin-top : 10px;
+	}
+	
+		.comment-img {
+		    font-size:25px;
+		    /* position: absolute; */
+	}
+		.commenter{
+			font-size: 15px;
+		
+	}
+		.reply-arrow{
+			font-size: 30px;
+		}
+		
     </style>
 </head>
 <body>
@@ -178,6 +220,19 @@
     <div>&nbsp;</div>
     <div id="commentList"></div>
     
+     <div id="replyForm">
+        <div class="commenter commenter-writebox" th:text="'@' + ${user}"></div>
+        <div class="reply-writebox-content">
+            <textarea name="replyComment" id="" cols="30" rows="3" placeholder="답글을 남겨보세요"></textarea>
+        </div>
+        <div id="replyFormBottom">
+            <div class="register-box">
+            	<a href="#" class="btn" id="wrtRepBtn" onclick="return false">등록</a>
+    			<a href="#" class="btn" id="cancelRepBtn" onclick="return false">취소</a> 
+            </div>
+        </div>
+    </div>
+    
     <div>&nbsp;</div>
         <div>&nbsp;</div>
         
@@ -188,7 +243,7 @@
             </div>
             <div id="comment-writebox-bottom">
                 <div class="register-box">
-                    <a href="#" class="btn" id="sendBtn">등록</a>
+                    <a href="#" onclick="return false" class="btn" id="sendBtn">등록</a>
                 </div>
             </div>
         </div>
@@ -199,7 +254,6 @@
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
-            <p>
             <h2> | 댓글 수정</h2>
             <div id="modify-writebox">
                 <div class="commenter commenter-writebox"></div>
@@ -208,14 +262,13 @@
                 </div>
                 <div id="modify-writebox-bottom">
                     <div class="register-box">
-                        <a href="#" class="btn" id="modBtn">등록</a>
+                        <a href="#" onclick="return false" class="btn" id="modBtn">등록</a>
                     </div>
                 </div>
             </div>
-            </p>
         </div>
     </div>
-        
+</div>
 
 <script th:inline="javascript">
 
@@ -234,12 +287,9 @@ let showList = function(bno){
 	});
 }
 
-
-
 $(document).ready(function(){
 	showList(bno);
 	
-	let lastClickedModifyButtonCno;
 	
 	$("#modBtn").click(function(){
 		let cno = $(this).attr("data-cno");
@@ -247,7 +297,6 @@ $(document).ready(function(){
     	console.log(comment);
     	if(comment.trim()==''){
     		alert("댓글을 입력해주세요.");
-    		$("textarea[name=modify_comment]").focus()
     		return;
     	}
     
@@ -259,9 +308,6 @@ $(document).ready(function(){
 		    success : function(result){
 		    	$(".close").trigger("click");
 		        showList(bno);
-		        if (lastClickedModifyButtonCno) {
-		            $('.btn-modify[data-cno="' + lastClickedModifyButtonCno + '"]').focus(); // 저장된 data-cno 값을 사용하여 포커스를 맞춤
-		        }
 		    },
 		    error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
 		});
@@ -273,7 +319,6 @@ $(document).ready(function(){
     	
     	if(comment.trim()==''){
     		alert("댓글을 입력해주세요.");
-    		$("textarea[name=comment]").focus()
     		return;
     	}
     
@@ -284,19 +329,50 @@ $(document).ready(function(){
 		    data: JSON.stringify({bno:bno, comment:comment}),
 		    success : function(result){
 		        showList(bno);
-		        $("textarea[name=comment]").val('');
-		        $("textarea[name=comment]").focus();
+ 		        $("textarea[name=comment]").val('');
 		    },
 		    error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
 		});
 });
 
-
-    $("#sendBtn").click(function(){
-    	showList(bno);
+    
+    $("#wrtRepBtn").click(function(){
+    	let comment = $("textarea[name=replyComment]").val();
+    	let pcno = $("#replyForm").parent().parent().parent().attr("data-cno");
+    	console.log(pcno);
+    	
+    	if(comment.trim()==''){
+    		alert("댓글을 입력해주세요.");
+    		return;
+    	}
+    
+    	$.ajax({
+		    type:'POST',       // 요청
+		    url: '/comments?bno='+bno,
+		    headers: {"content-type": "application/json"},
+		    data: JSON.stringify({pcno:pcno, bno:bno, comment:comment}),
+		    success : function(result){
+		        showList(bno);
+		        $("#replyForm").css("display","none")
+ 		        $("textarea[name=replyComment]").val('');
+		        $("#replyForm").appendTo("body");
+		    },
+		    error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+		});
+    	
+});
+    
+    
+    
+    $("#commentList").on("click",".replyBtn",function(){
+    	$("#replyForm").appendTo($(this).parent());
+    	$("#replyForm").css("display", "block");
     });
     
     
+    $("#cancelRepBtn").click(function(e){
+        $("#replyForm").css("display", "none");
+    });
 
     
     $("#commentList").on("click",".delBtn",function(){
@@ -317,11 +393,10 @@ $(document).ready(function(){
     });
     
     
-    let lastClickedModifyButton = null;
+
     
     $("#commentList").on("click",".btn-modify",function(e){
     	e.preventDefault();
-    	lastClickedModifyButtonCno = $(this).attr("data-cno");
         let target = e.target;
         let cno = target.getAttribute("data-cno");
         let bno = target.getAttribute("data-bno");
@@ -354,21 +429,27 @@ $(document).ready(function(){
 		let tmp = '<ul id="comment_ul">';
 		
 		comments.forEach(function(comment){
+		if(comment.cno !=comment.pcno){
+			tmp += '<div class="reply-arrow">↪</div>'
+			tmp += '<div class="reply-comment">';
+		}
 			tmp += '<li class="comment-item" id="comment_li" data-cno="'+comment.cno + '"data-pcno="' + comment.pcno + '"data-bno="' + comment.bno + '">';
 			tmp += '<span class="comment-img">';
-			tmp += '<i class="fa fa-user-circle" aria-hidden="true"></i></span>';
+			tmp += '<i class="fa fa-user-circle" aria-hidden="true"></i><span class="commenter">&nbsp;'+ comment.commenter + '</span></span>';
 			tmp += '<div class="comment-area">'
-			tmp += '<div class="commenter">' + comment.commenter + '</div>';
 			tmp += '<div class="comment-content">' + comment.comment + '</div>';
 			tmp += '<div class="comment-bottom">';
 			tmp += '<span class="up_date">' + comment.up_date + '</span> &nbsp;'
-			tmp += '<a href="#" class="wrtBtn" data-cno="'+ comment.cno + '"data-pcno="' + comment.pcno + '"data-bno="' + comment.bno + '">답글쓰기</a>';
-			tmp += '<a href="#" class="btn-modify" data-cno="'+ comment.cno + '"data-pcno="' + comment.pcno + '"data-bno="' + comment.bno + '">수정</a>';
-			tmp += '<a href="#" class="delBtn" data-cno="'+ comment.cno + '"data-pcno="' + comment.pcno + '"data-bno="' + comment.bno + '">삭제</a>';
+			tmp += '<a href="#" onclick="return false" class="replyBtn" data-cno="'+ comment.cno + '"data-pcno="' + comment.pcno + '"data-bno="' + comment.bno + '">답글쓰기</a>';
+			tmp += '<a href="#" onclick="return false" class="btn-modify" data-cno="'+ comment.cno + '"data-pcno="' + comment.pcno + '"data-bno="' + comment.bno + '">수정</a>';
+			tmp += '<a href="#" onclick="return false" class="delBtn" data-cno="'+ comment.cno + '"data-pcno="' + comment.pcno + '"data-bno="' + comment.bno + '">삭제</a>';
 			tmp += '</div>';
 			tmp += '</div>';
 			tmp += '</li>';
+		if(comment.cno !=comment.pcno)
+			tmp += '</div>';
 			tmp += '<div>&nbsp;</div>';
+			tmp += '<hr/>'
 		})
 		
 		return tmp + "</ul>";
