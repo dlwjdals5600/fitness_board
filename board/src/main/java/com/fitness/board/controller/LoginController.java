@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fitness.board.dao.UserDao;
 import com.fitness.board.dto.User;
@@ -34,7 +35,7 @@ public class LoginController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@ModelAttribute User user, Model model, HttpServletRequest request) throws Exception {
+	public String login(@ModelAttribute User user, @RequestParam("toURL") String toURL, Model model, HttpServletRequest request) throws Exception {
 		String loginId = user.getUser_id();
 		String pwd = user.getPwd();
 		
@@ -45,8 +46,10 @@ public class LoginController {
 
         HttpSession session = request.getSession();
         session.setAttribute("loginId", loginId);
+        
+        toURL = toURL==null || toURL.equals("") ? "/" : toURL;
 
-        return "redirect:/";
+        return "redirect:"+toURL;
 	}
 	
 	private boolean loginCheck(String user_id, String pwd) {
